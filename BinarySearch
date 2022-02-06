@@ -145,4 +145,56 @@
                 }
                 return right;
             }
+    
+    4. Find the index of the smallest element larger than target T in the ascending sorted array.
+
+        完整代码如下:
+            public int smallestElementThanTarget(int[] array, int target) {
+                if (array == null || array.length == 0) return -1;
+                int left = 0, right = array.length - 1;
+                while (left + 1 < right) {
+                    int mid = left + (right - left) / 2;
+                    if (array[mid] == target) {
+                        left = mid;
+                    } else if (array[mid] < target) {
+                        left = mid;
+                    } else {
+                        right = mid;
+                    }
+                }
+                if (array[left] > target) {
+                    return left;
+                } else if (array[right] > target) {
+                    return right;
+                } else {
+                    return -1;
+                }
+            }
+
+    5. Given a dictionary with unknown size, where the elements are in ascneding order. Find whether the target is in the dictionary or not.
+    Return the index or -1. The dictionary is not null and dict.get(i) will return null if i does not exist.
+
+        完整代码如下:
+            public int Search(Dictionary dict, int target) {
+                int left = 0, right = 10;
+                while (dict.get(right) != null && dict.get(right) < target) {
+                    left = right;
+                    right = 2 * left;
+                }
+                return binarySearch(dict, target, left, right);
+            } 
+
+            private int binarySearch(Dictionary dict, int target, int left, int right) {
+                while (left <= right) {
+                    int mid = left + (right - left) / 2;
+                    if (dict.get(mid) != null && dict.get(mid) == target) {
+                        return mid;
+                    } else if (dict.get(mid) != null && dict.get(mid) < target) {
+                        left = mid + 1;
+                    } else {
+                        right = mid - 1;
+                    }
+                }
+                return -1;
+            }
 
